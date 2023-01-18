@@ -1,0 +1,138 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
+
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = 1
+
+android {
+    namespace 'com.assignment.flickerfinder'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.assignment.flickerfinder"
+        minSdk 26
+        targetSdk 33
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // app config
+        buildConfigField("String", "API_URL", "\"www.flickr.com/services/api/\"")
+        buildConfigField("String", "FLICKER_API_KEY", "\"1508443e49213ff84d566777dc211f2a\"")
+
+        signingConfigs {
+            testSigningConfig {
+                storeFile rootProject.file("app/app_keystore.jks")
+                storePassword "abc123"
+                keyAlias "key0-app-flicker-finder"
+                keyPassword "abc123"
+                enableV1Signing false
+                enableV2Signing true
+                enableV3Signing true
+            }
+        }
+    }
+
+    buildTypes {
+        ext {
+            APP_NAME = "@string/app_name"
+            APP_NAME_DEV = "@string/app_name_dev"
+        }
+
+        debug {
+            debuggable true
+            manifestPlaceholders = [ applicationLabel: APP_NAME_DEV]
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            manifestPlaceholders = [ applicationLabel: APP_NAME]
+            signingConfig signingConfigs.testSigningConfig
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def builtType = variant.buildType.name
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode
+            outputFileName = "Flicker-Finder-${builtType}-V${versionName}-Build-${versionCode}.apk"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // jetpack - navigation
+    def nav_version = "2.5.3"
+    def fragment_ktx = "1.5.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_ktx"
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+
+    //retrofit - for network calls
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:3.12.10"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.2"
+    implementation 'com.github.mrmike:ok2curl:0.7.0'
+
+
+    //sdp-android
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    //Hilt
+    def hilt_version = "2.44"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
