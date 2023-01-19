@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<!--<layout xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="viewmodel"-->
+<!--            type="com.assignment.flickerfinder.ui.search.SearchViewModel" />-->
+<!--    </data>-->
+
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_margin="@dimen/_10sdp"
     android:layout_height="match_parent"
-    tools:context=".ui.search.SearchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello Search " />
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            android:text="Photos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--</layout>-->
