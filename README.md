@@ -2,7 +2,7 @@
 
 Requirement
 
-Create a mobile app that displays photos returned from the Flickr search API, written for your platform of choice (between iOS and Android). Code should be stored in online accessible version control (such as GitHub).
+Create a mobile app that displays photos returned from the Flickr search API.
 
 Technologies used 
 
