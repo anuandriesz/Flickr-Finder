@@ -5,8 +5,12 @@ import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.assignment.flickerfinder.R
+import com.assignment.flickerfinder.constants.Constants.Companion.IMAGE_NAME
+import com.assignment.flickerfinder.constants.Constants.Companion.IMAGE_URL
 import com.assignment.flickerfinder.databinding.FragmentSearchBinding
 import com.assignment.flickerfinder.ui.adapters.AdapterPhotoList
 import com.assignment.flickerfinder.utils.ErrorDialog.showAlertDialog
@@ -18,6 +22,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private var mAdapterPhotoList: AdapterPhotoList? = null
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding:FragmentSearchBinding
+    private val navigationController: NavController by lazy {
+        Navigation.findNavController(requireView())
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,7 +53,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun searchImages(query: String?) {
-        if (query != null && query.isNotEmpty()) {
+        if ((query != null) && query.isNotEmpty()) {
             binding.progressLoader.visibility = View.VISIBLE
         viewModel.performImageSearch(query)
             .observe(viewLifecycleOwner){ response ->
@@ -55,7 +62,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 is Resource.Success -> {
                     response.data?.photos?.let {
                         if (it.photo != null) {
-                        setAdapterItems(it.photo)
+                            setAdapterItems(it.photo)
                         }
                     }
                 }
@@ -63,9 +70,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     response.exception
                         context?.showAlertDialog(
                             title = getString(R.string.error_occurred),
-                            message = "${getString(R.string.please_restart_the_search)}",
+                            message = getString(R.string.please_restart_the_search),
                             ok = Pair(getString(R.string.ok)){
-
                             }
                         )
                 } else -> {}
@@ -73,19 +79,24 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         }
         } else {
-            AdapterPhotoList(null)
+            AdapterPhotoList(this,null)
 
         }
     }
 
     private fun setAdapterItems(photos: List<com.assignment.flickerfinder.network.responses.Photo>?) {
-        mAdapterPhotoList = AdapterPhotoList(photos)
+        mAdapterPhotoList = AdapterPhotoList(this,photos)
         binding.photosRecyclerView.adapter = mAdapterPhotoList
         binding.photosRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         mAdapterPhotoList?.cardOnClickListener(object : AdapterPhotoList.PhotoAdapterActionListener {
             override fun photoOnClick(item: com.assignment.flickerfinder.network.responses.Photo?) {
                 //navigate to photo details
+                val params = Bundle()
+                params.putString(IMAGE_URL,item?.urlO.toString())
+                params.putString(IMAGE_NAME,item?.title )
+                navigationController.navigate(R.id.imageDetailViewFragment, params)
+
             }
         })
     }

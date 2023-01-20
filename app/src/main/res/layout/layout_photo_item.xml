@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemCard"
     style="@style/adapterCardView"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_marginTop="@dimen/_8sdp"
     android:foreground="?android:attr/selectableItemBackground"
@@ -11,24 +12,32 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lutView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:padding="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/thumbnailImage"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/photoName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/lutView"
+            app:layout_constraintStart_toEndOf="@+id/thumbnailImage"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.326"
             tools:text="Session Completed" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

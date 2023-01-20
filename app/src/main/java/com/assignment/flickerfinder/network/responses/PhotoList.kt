@@ -1,7 +1,6 @@
 package com.assignment.flickerfinder.network.responses
 import com.google.gson.annotations.SerializedName
 
-
 data class PhotoList(
     @SerializedName("photos")
     val photos: Photos? = null,

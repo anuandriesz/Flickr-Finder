@@ -8,6 +8,8 @@ class Constants {
         const val URL = "url_o,url_q"
         const val  CALL_BACK_TOKEN = 1
         const val FORMAT = "json"
+        const val IMAGE_URL = "ImageURL"
+        const val IMAGE_NAME = "ImageName"
 
     }
 }

@@ -7,18 +7,20 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:label="fragment_search"
+        android:label="Flicker Finder"
+        android:name="com.assignment.flickerfinder.ui.search.SearchFragment"
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_imageDetailViewFragment"
             app:destination="@id/imageDetailViewFragment" />
     </fragment>
     <fragment
+        android:name="com.assignment.flickerfinder.ui.imageDetailView.ImageDetailViewFragment"
         android:id="@+id/imageDetailViewFragment"
-        android:label="fragment_image_detail_view"
+        android:label="Photo Details"
         tools:layout="@layout/fragment_image_detail_view" >
         <action
-            android:id="@+id/action_imageDetailViewFragment_to_searchFragment"
+            android:id="@+id/action_imageDetailViewFragment"
             app:destination="@id/searchFragment" />
     </fragment>
 </navigation>
