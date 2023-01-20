@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_200">#3E82FF</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_cell_item">#2A2A2A</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="almostWhite">#f2f2f2</color>
+    <color name="text_black_color">#2A2A2A</color>
+    <color name="text_grey_color">#8F8F8F</color>
+    <color name="form_text_color">#00000099</color>
+    <color name="hyper_link_color">#007FFF</color>
+
+    <!--Text Colors-->
+    <color name="text_main_title">#2A2A2A</color>
+    <color name="text_sub_title">#8F8F8F</color>
+    <color name="text_button">#FFFFFF</color>
+
+    <!--App Colors-->
+    <color name="app_checkbox_outline">#00000061</color>
+    <color name="primary_color">#3E82FF</color>
+    <color name="orange_color">#FF853E</color>
+    <color name="light_blue">#EEF6FF</color>
+    <color name="error_red">#EB192E</color>
+
+    <!-- Blueberry -->
+    <color name="colorPrimary">#34A5EA</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#34A5EA</color>
+    <color name="colorYellowOrange">#F5CF23</color>
+    <color name="colorDeepRed">#B10016</color>
+    <color name="colorGreen">#50E3C2</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorPink">#FF6464</color>
+
+
+    <!--Music Player-->
+    <color name="card_background">#EEF1FF</color>
+    <color name="player_background">#F4F4F4</color>
+    <color name="player_seekbar_background">#F1F1F1</color>
+    <color name="transparent">@android:color/transparent</color>
+
 </resources>

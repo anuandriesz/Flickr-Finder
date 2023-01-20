@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- cardView  -->
+    <style name="adapterCardView" parent="@android:style/TextAppearance">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">@color/light_blue</item>
+        <item name="cardCornerRadius">@dimen/_5sdp</item>
+        <item name="cardElevation">@dimen/_2sdp</item>
+    </style>
+
+</resources>

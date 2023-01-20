@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.assignment.flickerfinder.BuildConfig
 import com.assignment.flickerfinder.constants.Constants
+import com.assignment.flickerfinder.network.api.FlickerApi
 import com.assignment.flickerfinder.utils.FlickerConnectivityChecker
 import com.google.gson.GsonBuilder
 import com.moczul.ok2curl.CurlInterceptor
@@ -25,9 +26,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 open class NetworkModule {
-
-        @Singleton
         @Provides
+        @Singleton
         open fun provideOkHttpClient(context: Application): OkHttpClient {
 
             return OkHttpClient.Builder()
@@ -47,21 +47,20 @@ open class NetworkModule {
 
         @Provides
         @Singleton
-        open fun provideFlickerApi(client: OkHttpClient): Constants {
+        open fun provideFlickerApi(client: OkHttpClient): FlickerApi {
             val gson = GsonBuilder()
                 .setLenient()
                 .create()
-            return Retrofit.Builder()
+            return  Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build()
-                .create(Constants::class.java)
+                .create(FlickerApi::class.java)
         }
     }
 
     class NoConnectivityInterceptor : Interceptor {
-
         override fun intercept(chain: Interceptor.Chain): Response {
             if (!FlickerConnectivityChecker.instance.isOnline()) {
                 throw IOException("No internet connection")

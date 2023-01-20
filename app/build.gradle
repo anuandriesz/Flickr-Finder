@@ -24,7 +24,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // app config
-        buildConfigField("String", "API_URL", "\"www.flickr.com/services/api/\"")
+        buildConfigField("String", "API_URL", "\"https://api.flickr.com/services/rest/\"")
         buildConfigField("String", "FLICKER_API_KEY", "\"1508443e49213ff84d566777dc211f2a\"")
 
         signingConfigs {

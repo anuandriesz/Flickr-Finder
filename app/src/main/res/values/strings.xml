@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Flicker Finder</string>
+
+    <!--Common fields-->
+    <string name="error_occurred">"Error Occurred"</string>
+    <string name="please_restart_the_search">"Please restart the search"</string>
+    <string name="ok">"Ok"</string>
+    <string name="type_phrase">"Type your search keyword here</string>
 </resources>

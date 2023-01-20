@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<layout xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="viewmodel"-->
-<!--            type="com.assignment.flickerfinder.ui.search.SearchViewModel" />-->
-<!--    </data>-->
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.assignment.flickerfinder.ui.search.SearchViewModel" />
+    </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_margin="@dimen/_10sdp"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="match_parent">
 
-        <SearchView
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressLoader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -35,6 +42,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchView"/>
 
+        <RelativeLayout
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_20sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+            app:layout_constraintStart_toStartOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/photosRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/layout_photo_item" />
+        </RelativeLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-<!--</layout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

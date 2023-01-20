@@ -12,13 +12,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Singleton
     @Provides
+    @Singleton
     fun provideIoDispatcher() = Dispatchers.IO
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideFlickerSearchRepository (flickerApi: FlickerApi) : FlickerSearchRepository {
         return FlickerSearchRepository(flickerApi)
     }

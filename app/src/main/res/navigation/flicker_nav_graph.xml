@@ -7,7 +7,6 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.assignment.flickerfinder.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -16,7 +15,6 @@
     </fragment>
     <fragment
         android:id="@+id/imageDetailViewFragment"
-        android:name="com.assignment.flickerfinder.ui.imageDetailView.ImageDetailViewFragment"
         android:label="fragment_image_detail_view"
         tools:layout="@layout/fragment_image_detail_view" >
         <action
