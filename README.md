@@ -50,6 +50,7 @@ Create a mobile app that displays photos returned from the Flickr search API.
 
  Method: GET
  URL: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=YOUR_API_KEY&text=horse&tags=horse&per_page=25&extras=url_o,url_q&format=json&nojsoncallback=1
+ 
  Headers: None
  Body: None
 
@@ -68,6 +69,6 @@ Create a mobile app that displays photos returned from the Flickr search API.
   8 = United States Government Work)
 
 
-# Reference 
+# References 
  Android Developer Documentation
  https://developer.android.com/?gclid=Cj0KCQiAt66eBhCnARIsAKf3ZNG1hfxyNidKSJ4aBTiLbSyk1m0b3Sp8BNW9dORrSbFdFi0SsMnxFeUaAp1REALw_wcB&gclsrc=aw.ds
