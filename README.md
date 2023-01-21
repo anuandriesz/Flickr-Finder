@@ -26,18 +26,21 @@ Create a mobile app that displays photos returned from the Flickr search API.
 
 # Future Improvements 
 - Save prior search terms and present them as quick search options
-    #Possible solutions 
-    According to this app need to clarify the search history requirement.
-    For example, if the search terms should only be stored for the current session and not saved 
-    across app launches SharedPreferences or SQLite would be a good option.
-    But if the search terms should be stored permanently, and you want to query them later, 
-    SQLite or Room would be a better option.
+    
+    Possible solutions 
+        According to this app need to clarify the search history requirement.
+        For example, if the search terms should only be stored for the current session and not saved 
+        across app launches SharedPreferences or SQLite would be a good option.
+        But if the search terms should be stored permanently, and you want to query them later, 
+        SQLite or Room would be a better option.
 
 - Ability to bookmark and view images offline
+
 - Page results (allowing more than the initial 25 to be displayed)
-  #Possible Solution 
-  - Can be accommodate a user input option for user to define how many images per page require and that amount 
-    can pass as a parameter to the API call (per_page= AMOUNT).
+    
+    Possible Solution 
+        Can be accommodate a user input option for user to define how many images per page require and that amount 
+        can pass as a parameter to the API call (per_page= AMOUNT).
 
 
 
