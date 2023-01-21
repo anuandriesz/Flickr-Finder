@@ -13,9 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val flickerSearchRepository: FlickerSearchRepository) : ViewModel() {
+    val liveData = MutableLiveData<Resource<PhotoList?>>()
     fun performImageSearch( searchPhrase: String): MutableLiveData<Resource<PhotoList?>> {
-        val liveData = MutableLiveData<Resource<PhotoList?>>()
-
         liveData.postValue(Resource.Loading)
 
         val handler = CoroutineExceptionHandler { _, exception ->

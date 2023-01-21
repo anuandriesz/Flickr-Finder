@@ -60,6 +60,10 @@ class AdapterPhotoList(
         mListener = listener
     }
 
+    fun submitList(emptyList: List<Photo>) {
+        flickerPhotoLists = emptyList
+    }
+
     interface PhotoAdapterActionListener {
         fun photoOnClick(item: Photo?)
     }

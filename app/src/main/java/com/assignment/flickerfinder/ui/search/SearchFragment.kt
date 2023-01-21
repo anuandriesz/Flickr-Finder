@@ -12,8 +12,9 @@ import com.assignment.flickerfinder.R
 import com.assignment.flickerfinder.constants.Constants.Companion.IMAGE_NAME
 import com.assignment.flickerfinder.constants.Constants.Companion.IMAGE_URL
 import com.assignment.flickerfinder.databinding.FragmentSearchBinding
+import com.assignment.flickerfinder.network.responses.Photo
 import com.assignment.flickerfinder.ui.adapters.AdapterPhotoList
-import com.assignment.flickerfinder.utils.ErrorDialog.showAlertDialog
+import com.assignment.flickerfinder.utils.Dialog.showAlertDialog
 import com.assignment.flickerfinder.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +23,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private var mAdapterPhotoList: AdapterPhotoList? = null
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding:FragmentSearchBinding
+
     private val navigationController: NavController by lazy {
         Navigation.findNavController(requireView())
     }
@@ -32,34 +34,46 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         binding = FragmentSearchBinding.bind(view)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-
         binding.searchView.isActivated = true
         binding.searchView.queryHint = getString(R.string.type_phrase)
         binding.searchView.onActionViewExpanded()
         binding.searchView.isIconified = false
         binding.searchView.clearFocus()
 
+        //Search functionality
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchImages(query)
+                //searchImages(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                searchImages(newText)
                 return false
             }
         })
+
+        //This block of code will be executed when the user presses the cross button
+        binding.searchView.setOnCloseListener {
+            emptyPhotoAdapter()
+            return@setOnCloseListener false
+        }
     }
 
+    //Search API call handling
     private fun searchImages(query: String?) {
         if ((query != null) && query.isNotEmpty()) {
-            binding.progressLoader.visibility = View.VISIBLE
+
         viewModel.performImageSearch(query)
             .observe(viewLifecycleOwner){ response ->
-                binding.progressLoader.visibility = View.GONE
             when(response){
+                is Resource.Loading -> {
+                    setLoadingState(true)
+                }
+
                 is Resource.Success -> {
+                    setLoadingState(false)
                     response.data?.photos?.let {
                         if (it.photo != null) {
                             setAdapterItems(it.photo)
@@ -67,6 +81,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     }
                 }
                 is Resource.Error -> {
+                    setLoadingState(false)
                     response.exception
                         context?.showAlertDialog(
                             title = getString(R.string.error_occurred),
@@ -74,21 +89,35 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             ok = Pair(getString(R.string.ok)){
                             }
                         )
-                } else -> {}
+                } else -> {
+                    setLoadingState(false)
+                }
             }
 
         }
         } else {
-            AdapterPhotoList(this,null)
-
+            emptyPhotoAdapter()
         }
     }
 
-    private fun setAdapterItems(photos: List<com.assignment.flickerfinder.network.responses.Photo>?) {
+    private fun setLoadingState(state: Boolean){
+        if(state) {
+            binding.customProgressLoaderLayout.progressLoader.visibility = View.VISIBLE
+            binding.customProgressLoaderLayout.txtLoadingState.visibility = View.VISIBLE
+        } else {
+            binding.customProgressLoaderLayout.progressLoader.visibility = View.GONE
+            binding.customProgressLoaderLayout.txtLoadingState.visibility = View.GONE
+        }
+    }
+
+    //Setting search results  to the recycler view
+    private fun setAdapterItems(photos: List<Photo>?) {
         mAdapterPhotoList = AdapterPhotoList(this,photos)
         binding.photosRecyclerView.adapter = mAdapterPhotoList
         binding.photosRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        //Recycler view item on click event
+        //Navigate photo item to PhotoDetails View fragment.
         mAdapterPhotoList?.cardOnClickListener(object : AdapterPhotoList.PhotoAdapterActionListener {
             override fun photoOnClick(item: com.assignment.flickerfinder.network.responses.Photo?) {
                 //navigate to photo details
@@ -99,6 +128,27 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
             }
         })
+    }
+
+    private fun emptyPhotoAdapter(){
+        mAdapterPhotoList?.submitList(emptyList())
+        mAdapterPhotoList?.notifyDataSetChanged()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.liveData.observe(viewLifecycleOwner) { response ->
+            when(response){
+                is Resource.Success -> {
+                    response.data?.photos?.let {
+                        if (it.photo != null) {
+                            setAdapterItems(it.photo)
+                        }
+                    }
+                }
+                else -> {}
+            }
+        }
     }
 
 }

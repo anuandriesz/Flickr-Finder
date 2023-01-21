@@ -3,7 +3,7 @@ package com.assignment.flickerfinder.utils
 import android.app.AlertDialog
 import android.content.Context
 
-object ErrorDialog {
+object Dialog {
     fun Context.showAlertDialog(
         title: String,
         message: String,
